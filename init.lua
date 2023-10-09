@@ -6,6 +6,12 @@ https://neovim.io/doc/user/lua-guide.html
 require('settings.editor')
 require('settings.remap')
 
+-- disable netrw at the very start of your init.lua
+-- vim.g.loaded_netrw = 1
+-- vim.g.loaded_netrwPlugin = 1
+
+-- OR setup with some options
+
 -- Install package manager
 --    https://github.com/folke/lazy.nvim
 --    `:help lazy.nvim.txt` for more info
@@ -77,6 +83,43 @@ require('lazy').setup({
 
   -- Useful plugin to show you pending keybinds.
   { 'folke/which-key.nvim', opts = {} },
+
+  -- -- file explorer . just like vscode!
+  -- {
+  --   'nvim-tree/nvim-tree.lua',
+  --   opts = {
+  --     sort_by = 'case_sensitive',
+  --     view = {
+  --       width = 30,
+  --     },
+  --     renderer = {
+  --       group_empty = true,
+  --     },
+  --     filters = {
+  --       dotfiles = true,
+  --     },
+  --     on_attach = function (bufnr)
+  --       local api = require "nvim-tree.api"
+  --
+  --       local function opts(desc)
+  --         return {
+  --           desc = "nvim-tree: " .. desc,
+  --           buffer = bufnr,
+  --           silent = true,
+  --           noremap = true,
+  --           nowait = true,
+  --         }
+  --       end
+  --
+  --       -- default mappings
+  --       api.config.mappings.default_on_attach(bufnr)
+  --
+  --       -- custom mappings
+  --       vim.keymap.set('n', '<C-t>', api.tree.change_root_to_parent,        opts('Up'))
+  --       vim.keymap.set('n', '?',     api.tree.toggle_help,                  opts('Help'))
+  --     end
+  --   },
+  -- },
 
   {
     -- Adds git related signs to the gutter, as well as utilities for managing changes
