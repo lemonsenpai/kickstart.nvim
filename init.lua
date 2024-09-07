@@ -58,7 +58,7 @@ require('lazy').setup({
 
       -- Useful status updates for LSP
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      { 'j-hui/fidget.nvim', tag = 'legacy', opts = {} },
+      { 'j-hui/fidget.nvim',       tag = 'legacy', opts = {} },
 
       -- Additional lua configuration, makes nvim stuff amazing!
       'folke/neodev.nvim',
@@ -82,7 +82,7 @@ require('lazy').setup({
   },
 
   -- Useful plugin to show you pending keybinds.
-  { 'folke/which-key.nvim', opts = {} },
+  { 'folke/which-key.nvim',  opts = {} },
 
   -- -- file explorer . just like vscode!
   -- {
@@ -138,16 +138,16 @@ require('lazy').setup({
 
         -- don't override the built-in and fugitive keymaps
         local gs = package.loaded.gitsigns
-        vim.keymap.set({'n', 'v'}, ']c', function()
+        vim.keymap.set({ 'n', 'v' }, ']c', function()
           if vim.wo.diff then return ']c' end
           vim.schedule(function() gs.next_hunk() end)
           return '<Ignore>'
-        end, {expr=true, buffer = bufnr, desc = "Jump to next hunk"})
-        vim.keymap.set({'n', 'v'}, '[c', function()
+        end, { expr = true, buffer = bufnr, desc = "Jump to next hunk" })
+        vim.keymap.set({ 'n', 'v' }, '[c', function()
           if vim.wo.diff then return '[c' end
           vim.schedule(function() gs.prev_hunk() end)
           return '<Ignore>'
-        end, {expr=true, buffer = bufnr, desc = "Jump to previous hunk"})
+        end, { expr = true, buffer = bufnr, desc = "Jump to previous hunk" })
       end,
     },
   },
@@ -155,7 +155,19 @@ require('lazy').setup({
   {
     'Mofiqul/dracula.nvim',
     priority = 1000,
+    opts = {
+      transparent_bg = true
+    },
     config = function()
+      local dracula = require('dracula')
+      dracula.setup({
+        colors = dracula.colors(),
+        show_end_of_buffer = true,
+        italic_comment = true,
+        transparent_bg = true,
+        overrides = {}
+      })
+
       vim.cmd.colorscheme 'dracula'
     end,
   },
@@ -335,12 +347,15 @@ vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = 
 -- Defer Treesitter setup after first render to improve startup time of 'nvim {filename}'
 vim.defer_fn(function()
   require('nvim-treesitter.configs').setup {
+    modules = {},
+
     -- Add languages to be installed here that you want installed for treesitter
     ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'javascript', 'typescript', 'vimdoc', 'vim' },
-  
+    ignore_install = {},
     -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
     auto_install = false,
-  
+    sync_install = false,
+
     highlight = { enable = true },
     indent = { enable = true },
     incremental_selection = {
