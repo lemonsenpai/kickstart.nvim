@@ -15,6 +15,7 @@ return {
   },
   opts = {
     window = {
+      width = 64,
       position = 'right',
     },
     filesystem = {
