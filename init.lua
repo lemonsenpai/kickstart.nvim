@@ -1,5 +1,5 @@
 --[[
-   TODO: run AND READ `:help`.
+   `:help`. is your friend
 
   "<space>sh" to [s]earch the [h]elp documentation,
   which is very useful when you're not exactly sure of what you're looking for.
@@ -371,8 +371,8 @@ require('lazy').setup({
         -- pyright = {},
         -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
+        zls = {},
         ts_ls = {},
-        --
 
         lua_ls = {
           -- cmd = {...},
@@ -600,7 +600,18 @@ require('lazy').setup({
   },
 
   -- Highlight todo, notes, etc in comments
-  { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
+  {
+    'folke/todo-comments.nvim',
+    event = 'VimEnter',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    opts = {
+      signs = false,
+      highlight = {
+        keyword = 'fg',
+        after = '',
+      },
+    },
+  },
 
   { -- Collection of various small independent plugins/modules
     'echasnovski/mini.nvim',
