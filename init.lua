@@ -506,7 +506,33 @@ require('lazy').setup({
       local luasnip = require 'luasnip'
       luasnip.config.setup {}
 
+      local ELLIPSIS_CHAR = '…'
+      local MAX_LABEL_WIDTH = 32
+      -- local MIN_LABEL_WIDTH = 20
+
       cmp.setup {
+        formatting = {
+          fields = {
+            'abbr',
+            'kind',
+            'menu',
+          },
+          expandable_indicator = true,
+          format = function(entry, vim_item)
+            if vim_item.menu ~= nil then
+              local menu = vim_item.menu
+              local trunc_menu = vim.fn.strcharpart(menu, 0, MAX_LABEL_WIDTH)
+              if trunc_menu ~= menu then
+                vim_item.menu = trunc_menu .. ELLIPSIS_CHAR
+                -- elseif string.len(menu) < MIN_LABEL_WIDTH then
+                --   local padding = string.rep(' ', MIN_LABEL_WIDTH - string.len(menu))
+                --   vim_item.menu = menu .. padding
+              end
+            end
+
+            return vim_item
+          end,
+        },
         window = {
           completion = cmp.config.window.bordered(),
           documentation = cmp.config.window.bordered(),
