@@ -332,8 +332,16 @@ require('lazy').setup({
       local servers = {
         -- See `:help lspconfig-all` for a list of all the pre-configured LSPs
         zls = {},
-        ts_ls = {},
-
+        ts_ls = {
+          root_dir = require('lspconfig').util.root_pattern { 'package.json', 'tsconfig.json' },
+          single_file_support = false,
+          settings = {},
+        },
+        denols = {
+          root_dir = require('lspconfig').util.root_pattern { 'deno.json', 'deno.jsonc' },
+          single_file_support = false,
+          settings = {},
+        },
         ruby_lsp = {},
         lua_ls = {
           settings = {
@@ -343,6 +351,14 @@ require('lazy').setup({
               },
               -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
               -- diagnostics = { disable = { 'missing-fields' } },
+            },
+          },
+        },
+        -- this doesn't work. i don't know why...
+        bashls = {
+          settings = {
+            bashIde = {
+              globPattern = '*@(.sh|.inc|.bash|.command|.zshrc)',
             },
           },
         },
